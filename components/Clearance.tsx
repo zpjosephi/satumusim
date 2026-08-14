@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -49,8 +50,19 @@ export default function Clearance() {
     <section ref={root} className="relative">
       <div
         data-mm-pin
-        className="edge flex min-h-svh flex-col justify-center py-16"
+        className="edge relative isolate flex min-h-svh flex-col justify-center py-16"
       >
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Image
+            src="/img/etihad-bowl.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover opacity-20 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/60 to-bg/90" />
+        </div>
+
         <p className="track-label font-mono text-xs text-muted">
           MATCHWEEK 21 &middot; THE ETIHAD &middot; JANUARY 3
         </p>

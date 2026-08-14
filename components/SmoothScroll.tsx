@@ -22,6 +22,7 @@ function SmootherInit() {
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
         smooth: 1.1,
+        effects: true, // enables data-speed parallax on the hero backdrop
       });
 
       // anchor links have to go through the smoother, native jumps fight the transform

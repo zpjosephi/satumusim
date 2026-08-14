@@ -13,6 +13,11 @@ export default function Footer() {
           <p>satumusim &middot; a scroll-driven data story</p>
           <p>Data: football-data.org, via the xeleven archive</p>
           <p>Built with Next.js and GSAP</p>
+          <p className="mt-3 max-w-[52ch] text-muted/80 md:ml-auto">
+            Photos via Wikimedia Commons: Etihad at night by mjtmail/tiggy (CC
+            BY 2.0), Etihad bowl by Ank Kumar (CC BY-SA 4.0), Anfield by
+            Ruaraidh Gillies (CC BY-SA 2.0)
+          </p>
         </div>
       </div>
     </footer>

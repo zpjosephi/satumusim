@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -61,8 +62,22 @@ export default function Hero() {
     <section
       ref={root}
       id="top"
-      className="pitch-stripes edge relative flex min-h-svh flex-col pb-14 pt-28"
+      className="pitch-stripes edge relative isolate flex min-h-svh flex-col overflow-hidden pb-14 pt-28"
     >
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div data-speed="0.88" className="absolute inset-x-0 -inset-y-[12%]">
+          <Image
+            src="/img/etihad-night.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-45 saturate-[0.85]"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/40 to-bg" />
+      </div>
+
       <div className="grid grid-cols-2 items-start">
         <div data-hero-fade>
           <span

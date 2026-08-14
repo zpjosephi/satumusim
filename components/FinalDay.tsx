@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -50,8 +51,19 @@ export default function FinalDay() {
     <section ref={root} className="relative">
       <div
         data-day-pin
-        className="edge flex min-h-svh flex-col justify-center py-16"
+        className="edge relative isolate flex min-h-svh flex-col justify-center py-16"
       >
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <Image
+            src="/img/anfield-dusk.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover opacity-25 saturate-[0.55]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/65 to-bg" />
+        </div>
+
         <p className="track-label font-mono text-xs text-muted">
           MAY 12, 2019 &middot; THE FINAL DAY
         </p>
