@@ -38,8 +38,8 @@ export default function ScrubIntro() {
   );
 
   return (
-    <section id="intro" ref={root} className="px-6 py-32 md:py-48">
-      <p className="mx-auto max-w-4xl font-display text-2xl font-medium leading-relaxed tracking-tight md:text-4xl md:leading-snug">
+    <section id="intro" ref={root} className="edge py-40 md:py-56">
+      <p className="track-head max-w-[34ch] font-display text-[clamp(1.6rem,3.2vw,3rem)] font-medium leading-snug md:ml-[16vw]">
         {TEXT.split(" ").map((word, i) => (
           <span key={i} data-word className="inline">
             {word}{" "}

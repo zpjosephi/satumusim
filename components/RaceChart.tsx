@@ -8,12 +8,12 @@ import { RACE, BEATS, WEEKS } from "@/lib/season";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const W = 1000;
-const H = 560;
-const ML = 48;
-const MR = 136;
+const W = 1200;
+const H = 520;
+const ML = 52;
+const MR = 150;
 const MT = 24;
-const MB = 44;
+const MB = 46;
 const PW = W - ML - MR;
 const PH = H - MT - MB;
 const MAX_PTS = 100;
@@ -150,8 +150,13 @@ export default function RaceChart() {
     const tip = tooltip.current;
     if (!svg || !box || !tip) return;
 
+    // the svg can letterbox inside its element (max-height cap), so map through
+    // the real content scale instead of assuming element width == viewBox width
     const rect = svg.getBoundingClientRect();
-    const px = ((e.clientX - rect.left) / rect.width) * W;
+    const scale = Math.min(rect.width / W, rect.height / H);
+    const offY = (rect.height - H * scale) / 2; // preserveAspectRatio xMinYMid
+
+    const px = (e.clientX - rect.left) / scale;
     let wk = Math.round(((px - ML) / PW) * (WEEKS - 1) + 1);
     wk = Math.min(Math.max(wk, 1), Math.max(1, Math.floor(drawnWk.current)));
 
@@ -171,11 +176,11 @@ export default function RaceChart() {
     tip.innerHTML = `<span class="font-mono">WK ${String(wk).padStart(2, "0")}</span> &nbsp; Man City ${city} &middot; Liverpool ${liv}`;
 
     const boxRect = box.getBoundingClientRect();
-    const left = (cx / W) * boxRect.width;
-    const flip = left > boxRect.width - 220;
+    const left = cx * scale + (rect.left - boxRect.left);
+    const flip = left > boxRect.width - 230;
     tip.style.left = `${flip ? left - 12 : left + 12}px`;
     tip.style.transform = flip ? "translateX(-100%)" : "none";
-    tip.style.top = `${((Math.min(yAt(city), yAt(liv)) / H) * boxRect.height) - 44}px`;
+    tip.style.top = `${Math.min(yAt(city), yAt(liv)) * scale + offY + (rect.top - boxRect.top) - 44}px`;
     tip.style.opacity = "1";
   }
 
@@ -189,182 +194,180 @@ export default function RaceChart() {
     <section ref={root} className="relative">
       <div
         data-race-pin
-        className="flex min-h-svh flex-col justify-center px-6 py-16 md:px-10"
+        className="edge flex min-h-svh flex-col justify-center py-14"
       >
-        <div className="mx-auto w-full max-w-7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="max-w-2xl font-display text-3xl font-semibold tracking-tight md:text-4xl">
-              Thirty-eight weeks, one line each
-            </h2>
-            <p className="font-mono text-sm text-muted">
-              MATCHWEEK <span data-ro-week className="text-ink">38</span>
-              <span className="mx-3 text-muted/50">|</span>
-              Man City <span data-ro-pts className="font-semibold text-city">98</span>
-              <span className="mx-2 text-muted/50">&middot;</span>
-              Liverpool <span data-ro-pts className="font-semibold text-liv">97</span>
-            </p>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 className="track-head max-w-2xl font-display text-3xl font-semibold md:text-4xl">
+            Thirty-eight weeks, one line each
+          </h2>
+          <p className="font-mono text-sm text-muted">
+            MATCHWEEK <span data-ro-week className="text-ink">38</span>
+            <span className="mx-3 text-muted/50">|</span>
+            Man City <span data-ro-pts className="font-semibold text-city">98</span>
+            <span className="mx-2 text-muted/50">&middot;</span>
+            Liverpool <span data-ro-pts className="font-semibold text-liv">97</span>
+          </p>
+        </div>
+
+        <div ref={chartBox} className="relative mt-8">
+          <div className="mb-4 flex gap-6" aria-hidden="true">
+            {series.map((s) => (
+              <span key={s.team} className="flex items-center gap-2 text-sm text-muted">
+                <span
+                  className="inline-block h-2.5 w-2.5 rounded-full"
+                  style={{ background: s.color }}
+                />
+                {s.team}
+              </span>
+            ))}
           </div>
 
-          <div className="mt-10 grid items-center gap-10 md:grid-cols-[1.6fr_1fr] md:gap-14">
-            <div ref={chartBox} className="relative">
-              <div className="mb-4 flex gap-6" aria-hidden="true">
-                {series.map((s) => (
-                  <span key={s.team} className="flex items-center gap-2 text-sm text-muted">
-                    <span
-                      className="inline-block h-2.5 w-2.5 rounded-full"
-                      style={{ background: s.color }}
-                    />
-                    {s.team}
-                  </span>
-                ))}
-              </div>
-
-              <figure>
-                <svg
-                  ref={svgRef}
-                  viewBox={`0 0 ${W} ${H}`}
-                  className="w-full cursor-crosshair"
-                  role="img"
-                  aria-label="Line chart of cumulative points per matchweek for Manchester City and Liverpool in the 2018/19 season. City finish on 98, Liverpool on 97."
-                  onPointerMove={handleMove}
-                  onPointerLeave={handleLeave}
-                >
-                  {Y_TICKS.map((t) => (
-                    <g key={t}>
-                      <line
-                        x1={ML}
-                        x2={W - MR}
-                        y1={yAt(t)}
-                        y2={yAt(t)}
-                        stroke="var(--line)"
-                        strokeWidth="1"
-                      />
-                      <text
-                        x={ML - 10}
-                        y={yAt(t) + 5}
-                        textAnchor="end"
-                        fontSize="17"
-                        fill="var(--muted)"
-                        fontFamily="var(--font-geist-mono)"
-                      >
-                        {t}
-                      </text>
-                    </g>
-                  ))}
-                  {X_TICKS.map((t) => (
-                    <text
-                      key={t}
-                      x={xAt(t)}
-                      y={H - 12}
-                      textAnchor="middle"
-                      fontSize="17"
-                      fill="var(--muted)"
-                      fontFamily="var(--font-geist-mono)"
-                    >
-                      {t}
-                    </text>
-                  ))}
-
+          <figure>
+            <svg
+              ref={svgRef}
+              viewBox={`0 0 ${W} ${H}`}
+              preserveAspectRatio="xMinYMid meet"
+              className="max-h-[58svh] w-full cursor-crosshair"
+              role="img"
+              aria-label="Line chart of cumulative points per matchweek for Manchester City and Liverpool in the 2018/19 season. City finish on 98, Liverpool on 97."
+              onPointerMove={handleMove}
+              onPointerLeave={handleLeave}
+            >
+              {Y_TICKS.map((t) => (
+                <g key={t}>
                   <line
-                    ref={crosshair}
-                    x1={xAt(1)}
-                    x2={xAt(1)}
-                    y1={MT}
-                    y2={H - MB}
-                    stroke="var(--muted)"
+                    x1={ML}
+                    x2={W - MR}
+                    y1={yAt(t)}
+                    y2={yAt(t)}
+                    stroke="var(--line)"
                     strokeWidth="1"
-                    strokeDasharray="3 4"
-                    style={{ opacity: 0, transition: "opacity 150ms" }}
                   />
+                  <text
+                    x={ML - 10}
+                    y={yAt(t) + 5}
+                    textAnchor="end"
+                    fontSize="17"
+                    fill="var(--muted)"
+                    fontFamily="var(--font-geist-mono)"
+                  >
+                    {t}
+                  </text>
+                </g>
+              ))}
+              {X_TICKS.map((t) => (
+                <text
+                  key={t}
+                  x={xAt(t)}
+                  y={H - 12}
+                  textAnchor="middle"
+                  fontSize="17"
+                  fill="var(--muted)"
+                  fontFamily="var(--font-geist-mono)"
+                >
+                  {t}
+                </text>
+              ))}
 
-                  {series.map((s, i) => (
-                    <g key={s.team}>
-                      <path
-                        data-race-path
-                        d={s.d}
-                        fill="none"
-                        stroke={s.color}
-                        strokeWidth="2.5"
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                      />
-                      <circle
-                        data-head-dot
-                        cx={s.pts[s.pts.length - 1].x}
-                        cy={s.pts[s.pts.length - 1].y}
-                        r="5.5"
-                        fill={s.color}
-                        stroke="var(--bg)"
-                        strokeWidth="2"
-                      />
-                      <circle
-                        ref={(node) => {
-                          hoverDots.current[i] = node;
-                        }}
-                        r="4.5"
-                        fill={s.color}
-                        stroke="var(--bg)"
-                        strokeWidth="2"
-                        style={{ opacity: 0, transition: "opacity 150ms" }}
-                      />
-                    </g>
-                  ))}
-
-                  <g data-end-label>
-                    <text
-                      x={xAt(WEEKS) + 14}
-                      y={yAt(98) - 2}
-                      fontSize="19"
-                      fontWeight="600"
-                      fill="var(--ink)"
-                    >
-                      Man City 98
-                    </text>
-                    <text
-                      x={xAt(WEEKS) + 14}
-                      y={yAt(97) + 22}
-                      fontSize="19"
-                      fontWeight="600"
-                      fill="var(--ink)"
-                    >
-                      Liverpool 97
-                    </text>
-                  </g>
-                </svg>
-                <figcaption className="mt-3 font-mono text-xs text-muted">
-                  Cumulative points by matchweek &middot; 2018/19
-                </figcaption>
-              </figure>
-
-              <div
-                ref={tooltip}
-                aria-hidden="true"
-                className="pointer-events-none absolute z-10 whitespace-nowrap rounded-lg border border-[var(--line)] bg-surface px-3 py-2 text-xs text-ink shadow-xl"
+              <line
+                ref={crosshair}
+                x1={xAt(1)}
+                x2={xAt(1)}
+                y1={MT}
+                y2={H - MB}
+                stroke="var(--muted)"
+                strokeWidth="1"
+                strokeDasharray="3 4"
                 style={{ opacity: 0, transition: "opacity 150ms" }}
               />
-            </div>
 
-            <div className="race-caption-stack">
-              {BEATS.map((beat) => (
-                <div key={beat.week} data-race-caption className="race-caption">
-                  <p className="font-mono text-xs tracking-widest text-muted">
-                    MATCHWEEK {String(beat.week).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight md:text-3xl">
-                    {beat.title}
-                  </h3>
-                  <p className="mt-4 max-w-[40ch] leading-relaxed text-muted">
-                    {beat.body}
-                  </p>
-                </div>
+              {series.map((s, i) => (
+                <g key={s.team}>
+                  <path
+                    data-race-path
+                    d={s.d}
+                    fill="none"
+                    stroke={s.color}
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                  <circle
+                    data-head-dot
+                    cx={s.pts[s.pts.length - 1].x}
+                    cy={s.pts[s.pts.length - 1].y}
+                    r="5.5"
+                    fill={s.color}
+                    stroke="var(--bg)"
+                    strokeWidth="2"
+                  />
+                  <circle
+                    ref={(node) => {
+                      hoverDots.current[i] = node;
+                    }}
+                    r="4.5"
+                    fill={s.color}
+                    stroke="var(--bg)"
+                    strokeWidth="2"
+                    style={{ opacity: 0, transition: "opacity 150ms" }}
+                  />
+                </g>
               ))}
-            </div>
+
+              <g data-end-label>
+                <text
+                  x={xAt(WEEKS) + 14}
+                  y={yAt(98) - 2}
+                  fontSize="19"
+                  fontWeight="600"
+                  fill="var(--ink)"
+                >
+                  Man City 98
+                </text>
+                <text
+                  x={xAt(WEEKS) + 14}
+                  y={yAt(97) + 22}
+                  fontSize="19"
+                  fontWeight="600"
+                  fill="var(--ink)"
+                >
+                  Liverpool 97
+                </text>
+              </g>
+            </svg>
+            <figcaption className="mt-3 font-mono text-xs text-muted">
+              Cumulative points by matchweek &middot; 2018/19
+            </figcaption>
+          </figure>
+
+          {/* on desktop the beats overlay the chart's empty upper-left corner */}
+          <div className="race-caption-stack mt-10 md:mt-0">
+            {BEATS.map((beat) => (
+              <div key={beat.week} data-race-caption className="race-caption">
+                <p className="track-label font-mono text-xs text-muted">
+                  MATCHWEEK {String(beat.week).padStart(2, "0")}
+                </p>
+                <h3 className="track-head mt-3 font-display text-2xl font-semibold md:text-3xl">
+                  {beat.title}
+                </h3>
+                <p className="mt-4 max-w-[40ch] leading-relaxed text-muted">
+                  {beat.body}
+                </p>
+              </div>
+            ))}
           </div>
+
+          <div
+            ref={tooltip}
+            aria-hidden="true"
+            className="pointer-events-none absolute z-10 whitespace-nowrap rounded-lg border border-[var(--line)] bg-surface px-3 py-2 text-xs text-ink shadow-xl"
+            style={{ opacity: 0, transition: "opacity 150ms" }}
+          />
         </div>
       </div>
 
-      <div className="px-6 pb-24">
-        <details className="mx-auto max-w-2xl rounded-xl border border-[var(--line)] bg-surface/60 px-6 py-4">
+      <div className="edge pb-24">
+        <details className="max-w-2xl rounded-xl border border-[var(--line)] bg-surface/60 px-6 py-4">
           <summary className="cursor-pointer text-sm text-muted transition-colors hover:text-ink">
             View the race as a table
           </summary>

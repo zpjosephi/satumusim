@@ -9,6 +9,8 @@
   --city: #3e9be0;
   --liv: #f04a5e;
   --bar-rest: #4d5a70;
+  /* fluid page margin: the layout runs edge to edge, this is the only gutter */
+  --edge: clamp(1.25rem, 4vw, 4.5rem);
 }
 
 @theme inline {
@@ -62,6 +64,24 @@ body::before {
   border-radius: 2px;
 }
 
+/* the one gutter the whole page hangs on */
+.edge {
+  padding-inline: var(--edge);
+}
+
+/* letter-spacing tuned per size instead of one recipe everywhere */
+.track-display {
+  letter-spacing: -0.04em;
+}
+
+.track-head {
+  letter-spacing: -0.02em;
+}
+
+.track-label {
+  letter-spacing: 0.08em;
+}
+
 /* mown-pitch stripes, barely there */
 .pitch-stripes {
   background-image: repeating-linear-gradient(
@@ -85,7 +105,46 @@ body::before {
   min-height: 280px;
 }
 
+/* desktop pinned mode: beats sit in the chart's empty upper-left corner */
+@media (min-width: 768px) {
+  .race-pinned .race-caption-stack {
+    position: absolute;
+    left: 6%;
+    top: 9%;
+    width: min(38ch, 36%);
+    height: 44%;
+    min-height: 0;
+  }
+}
+
 .race-pinned .race-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+/* reduced motion: the streak strip stays reachable as a plain scroll area */
+@media (prefers-reduced-motion: reduce) {
+  .streak-viewport {
+    overflow-x: auto;
+  }
+}
+
+/* final-day panels: same pattern as the race captions */
+.day-panel {
+  margin-bottom: 3.5rem;
+}
+
+.day-pinned .day-stack {
+  position: relative;
+  height: 100%;
+  min-height: 320px;
+}
+
+.day-pinned .day-panel {
   position: absolute;
   inset: 0;
   display: flex;

@@ -84,6 +84,57 @@ export const FINAL_TOP6: FinalRow[] = [
   { team: "Manchester Utd", pts: 66, w: 19, d: 9, l: 10, gf: 65, ga: 54, gd: 11 },
 ];
 
+// City's 14 straight wins from matchweek 25 to the end, in week order
+export type StreakMatch = { wk: number; opp: string; venue: "H" | "A"; score: string };
+
+export const STREAK: StreakMatch[] = [
+  { wk: 25, opp: "Arsenal", venue: "H", score: "3-1" },
+  { wk: 26, opp: "Chelsea", venue: "H", score: "6-0" },
+  { wk: 27, opp: "Everton", venue: "A", score: "2-0" },
+  { wk: 28, opp: "West Ham", venue: "H", score: "1-0" },
+  { wk: 29, opp: "Bournemouth", venue: "A", score: "1-0" },
+  { wk: 30, opp: "Watford", venue: "H", score: "3-1" },
+  { wk: 31, opp: "Man United", venue: "A", score: "2-0" },
+  { wk: 32, opp: "Fulham", venue: "A", score: "2-0" },
+  { wk: 33, opp: "Cardiff", venue: "H", score: "2-0" },
+  { wk: 34, opp: "Crystal Palace", venue: "A", score: "3-1" },
+  { wk: 35, opp: "Tottenham", venue: "H", score: "1-0" },
+  { wk: 36, opp: "Burnley", venue: "A", score: "1-0" },
+  { wk: 37, opp: "Leicester", venue: "H", score: "1-0" },
+  { wk: 38, opp: "Brighton", venue: "A", score: "4-1" },
+];
+
+// the final day, May 12 2019: what each scoreline meant for the title
+export const FINAL_DAY = [
+  {
+    time: "15:00",
+    board: [
+      { fix: "Brighton 0-0 Man City", color: "var(--city)" },
+      { fix: "Liverpool 0-0 Wolves", color: "var(--liv)" },
+    ],
+    title: "Ninety minutes for the title",
+    body: "City must win at Brighton. Anything less, and a Liverpool win takes the trophy to Anfield.",
+  },
+  {
+    time: "27'",
+    board: [
+      { fix: "Brighton 1-0 Man City", color: "var(--city)" },
+      { fix: "Liverpool 1-0 Wolves", color: "var(--liv)" },
+    ],
+    title: "For 83 seconds, the title is Liverpool's",
+    body: "Glenn Murray heads Brighton in front. As it stands, Liverpool are champions.",
+  },
+  {
+    time: "FT",
+    board: [
+      { fix: "Brighton 1-4 Man City", color: "var(--city)" },
+      { fix: "Liverpool 2-0 Wolves", color: "var(--liv)" },
+    ],
+    title: "98 to 97",
+    body: "Aguero answers within 83 seconds, and City score three more. Both teams win. Only one of them counts.",
+  },
+];
+
 export const STATS = [
   { value: 14, label: "consecutive City wins to close the season" },
   { value: 1, label: "Liverpool defeat in 38 matches" },

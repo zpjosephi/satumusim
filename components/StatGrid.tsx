@@ -47,30 +47,28 @@ export default function StatGrid() {
   );
 
   return (
-    <section ref={root} className="px-6 py-32 md:py-40">
-      <div className="mx-auto max-w-6xl">
-        <h2 className="max-w-3xl font-display text-3xl font-semibold tracking-tight md:text-5xl">
-          A race with no room to breathe
-        </h2>
-        <div className="mt-14 grid grid-flow-dense grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2">
-          {STATS.map((s) => (
-            <div
-              key={s.label}
-              data-tile
-              className="bg-surface px-8 py-10 md:px-10 md:py-12"
+    <section ref={root} className="edge py-32 md:py-44">
+      <h2 className="track-head max-w-3xl font-display text-3xl font-semibold md:text-5xl">
+        A race with no room to breathe
+      </h2>
+      <div className="mt-16 grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+        {STATS.map((s) => (
+          <div
+            key={s.label}
+            data-tile
+            className="border-l border-[var(--line)] pl-6 md:pl-8"
+          >
+            <span
+              data-stat-value={s.value}
+              className="track-display font-display text-[clamp(3.5rem,7vw,6.5rem)] font-extrabold leading-none text-ink"
             >
-              <span
-                data-stat-value={s.value}
-                className="font-display text-6xl font-extrabold leading-none text-ink md:text-7xl"
-              >
-                {s.value}
-              </span>
-              <p className="mt-4 max-w-[26ch] text-sm leading-relaxed text-muted md:text-base">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
+              {s.value}
+            </span>
+            <p className="mt-4 max-w-[24ch] text-sm leading-relaxed text-muted md:text-base">
+              {s.label}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );
