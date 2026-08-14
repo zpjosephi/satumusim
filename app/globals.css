@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0a0d12;
+  --surface: #10141b;
+  --ink: #e9eef5;
+  --muted: #94a0b1;
+  --line: rgba(233, 238, 245, 0.09);
+  --city: #3e9be0;
+  --liv: #f04a5e;
+  --bar-rest: #4d5a70;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-city: var(--city);
+  --color-liv: var(--liv);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-outfit);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  position: relative;
+}
+
+/* faint floodlight wash, one per club corner */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 600px at 12% -5%, rgba(62, 155, 224, 0.07), transparent 65%),
+    radial-gradient(900px 700px at 95% 100%, rgba(240, 74, 94, 0.05), transparent 65%);
+  z-index: 0;
+}
+
+::selection {
+  background: rgba(62, 155, 224, 0.35);
+}
+
+:focus-visible {
+  outline: 2px solid var(--city);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* mown-pitch stripes, barely there */
+.pitch-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 140px,
+    rgba(233, 238, 245, 0.016) 140px,
+    rgba(233, 238, 245, 0.016) 280px
+  );
+}
+
+/* story beats: static stacked list by default (no JS / reduced motion),
+   overlaid + scrubbed once the pinned timeline takes over */
+.race-caption {
+  margin-bottom: 2.5rem;
+}
+
+.race-pinned .race-caption-stack {
+  position: relative;
+  height: 100%;
+  min-height: 280px;
+}
+
+.race-pinned .race-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 0;
 }
