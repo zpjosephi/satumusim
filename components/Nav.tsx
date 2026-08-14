@@ -8,7 +8,7 @@ export default function Nav() {
         >
           satumusim
         </a>
-        <p className="font-mono text-xs text-muted">
+        <p className="hidden font-mono text-xs text-muted sm:block">
           Premier League 2018/19 &middot; a data story
         </p>
       </nav>
