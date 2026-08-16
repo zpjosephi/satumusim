@@ -72,10 +72,10 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-45 saturate-[0.85]"
+            className="object-cover opacity-55 saturate-[0.85]"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/40 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-b from-bg/65 via-bg/30 to-bg" />
       </div>
 
       <div className="grid grid-cols-2 items-start">

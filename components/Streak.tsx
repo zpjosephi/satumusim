@@ -40,7 +40,8 @@ export default function Streak() {
   );
 
   return (
-    <section ref={root} className="relative overflow-hidden">
+    <section ref={root} className="relative isolate overflow-hidden">
+      <div aria-hidden="true" className="wash wash-city" />
       <div className="streak-viewport flex min-h-svh flex-col justify-center py-16">
         <div className="edge flex flex-wrap items-end justify-between gap-4">
           <h2 className="track-head max-w-xl font-display text-3xl font-semibold md:text-5xl">

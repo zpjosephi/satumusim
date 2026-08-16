@@ -17,16 +17,18 @@ export default function Clearance() {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // the ball's resting spot (11.7mm short of the line) is set in CSS;
-        // the scrub just replays the journey there from the left edge
+        // babak 1: bola menggelinding ke arah garis (posisi berhenti 11.7mm
+        // di-set CSS). babak 2: label muncul. babak 3: Stones nyapu bolanya
+        // keluar layar, itu clearance-nya.
         gsap.set("[data-mm-label]", { autoAlpha: 0 });
+        gsap.set("[data-mm-save]", { autoAlpha: 0 });
         gsap.set("[data-mm-copy]", { autoAlpha: 0, y: 20 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: root.current,
             start: "top top",
-            end: "+=1800",
+            end: "+=2400",
             scrub: 0.6,
             pin: "[data-mm-pin]",
             anticipatePin: 1,
@@ -36,11 +38,22 @@ export default function Clearance() {
 
         tl.fromTo(
           ball.current,
-          { x: () => -(ball.current?.offsetLeft ?? 0) },
-          { x: 0, duration: 3, ease: "power2.out" },
+          { x: () => -(ball.current?.offsetLeft ?? 0), rotation: -540 },
+          { x: 0, rotation: 0, duration: 3, ease: "power2.out" },
         )
-          .to("[data-mm-label]", { autoAlpha: 1, duration: 0.5 }, 2.4)
-          .to("[data-mm-copy]", { autoAlpha: 1, y: 0, duration: 0.6 }, 2.5);
+          .to("[data-mm-label]", { autoAlpha: 1, duration: 0.4 }, 2.5)
+          .to(
+            ball.current,
+            {
+              x: () => -window.innerWidth,
+              rotation: "-=900",
+              duration: 1.1,
+              ease: "power3.in",
+            },
+            3.7,
+          )
+          .to("[data-mm-save]", { autoAlpha: 1, duration: 0.5 }, 4.3)
+          .to("[data-mm-copy]", { autoAlpha: 1, y: 0, duration: 0.6 }, 4.5);
       });
     },
     { scope: root },
@@ -58,9 +71,10 @@ export default function Clearance() {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover opacity-20 grayscale"
+            className="object-cover opacity-40 saturate-[0.7]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/60 to-bg/90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/45 to-bg/80" />
+          <div className="wash wash-city" />
         </div>
 
         <p className="track-label font-mono text-xs text-muted">
@@ -78,17 +92,27 @@ export default function Clearance() {
           </p>
           <div className="absolute inset-y-0 right-[12%] w-[3px] bg-ink" />
 
+          {/* GSAP megang transform-nya, jadi offset vertikal ga boleh pake
+              translate class (bakal ketimpa) */}
           <div
             ref={ball}
-            className="absolute top-1/2 size-14 -translate-y-1/2 rounded-full bg-ink shadow-[0_0_30px_rgba(233,238,245,0.25)]"
-            style={{ left: "calc(88% - 3.5rem - 4px)" }}
-          />
+            className="absolute top-[calc(50%-2rem)] size-16 rounded-full bg-ink shadow-[0_0_30px_rgba(233,238,245,0.25)]"
+            style={{ left: "calc(88% - 4rem - 4px)" }}
+          >
+            <div className="absolute left-[16%] top-[30%] h-[24%] w-[24%] rounded-full bg-bg/70" />
+          </div>
 
           <p
             data-mm-label
-            className="absolute right-[12.5%] top-[15%] font-mono text-sm font-semibold text-ink md:text-base"
+            className="absolute right-[12.5%] top-[8%] font-mono text-sm font-semibold text-ink md:text-base"
           >
             11.7 mm
+          </p>
+          <p
+            data-mm-save
+            className="track-label absolute bottom-[14%] right-[13%] font-mono text-xs font-semibold text-city md:text-sm"
+          >
+            CLEARED &middot; STONES, 19&apos;
           </p>
           <p className="absolute bottom-0 left-0 font-mono text-[10px] text-muted/70">
             not to scale

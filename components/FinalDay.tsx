@@ -40,8 +40,17 @@ export default function FinalDay() {
           tl.to(panels[i - 1], { autoAlpha: 0, y: -22, duration: 0.4 }, i)
             .to(panel, { autoAlpha: 1, y: 0, duration: 0.5 }, i + 0.25);
         });
+        // klimaks: pas skor akhir masuk, lampu City banjir + judulnya mantap
+        const climaxAt = panels.length - 1 + 0.3;
+        tl.to("[data-day-flood]", { autoAlpha: 1, duration: 0.9 }, climaxAt);
+        tl.fromTo(
+          "[data-day-final]",
+          { scale: 0.93 },
+          { scale: 1, duration: 0.7, ease: "back.out(1.6)" },
+          climaxAt,
+        );
         // hold the last panel on screen for a beat before the pin releases
-        tl.to({}, { duration: 0.8 });
+        tl.to({}, { duration: 1.2 });
       });
     },
     { scope: root },
@@ -59,9 +68,18 @@ export default function FinalDay() {
             alt=""
             fill
             sizes="100vw"
-            className="object-cover opacity-25 saturate-[0.55]"
+            className="object-cover opacity-45 saturate-[0.8]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/65 to-bg" />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/45 to-bg" />
+          {/* pas panel terakhir, lampu biru City banjirin layar (diatur GSAP) */}
+          <div
+            data-day-flood
+            className="absolute inset-0 opacity-0"
+            style={{
+              background:
+                "radial-gradient(90% 80% at 50% 85%, rgba(62,155,224,0.22), transparent 70%)",
+            }}
+          />
         </div>
 
         <p className="track-label font-mono text-xs text-muted">
@@ -69,28 +87,44 @@ export default function FinalDay() {
         </p>
 
         <div className="day-stack mt-10">
-          {FINAL_DAY.map((panel) => (
-            <div key={panel.time} data-day-panel className="day-panel">
-              <div className="flex flex-wrap items-center gap-x-10 gap-y-2 font-mono text-sm md:text-base">
-                {panel.board.map((b) => (
-                  <span key={b.fix} className="flex items-center gap-2.5 text-ink">
-                    <span
-                      className="inline-block h-2.5 w-2.5 rounded-full"
-                      style={{ background: b.color }}
-                    />
-                    {b.fix}
-                  </span>
-                ))}
-                <span className="text-muted">{panel.time}</span>
+          {FINAL_DAY.map((panel, i) => {
+            const last = i === FINAL_DAY.length - 1;
+            return (
+              <div key={panel.time} data-day-panel className="day-panel">
+                <div className="flex flex-wrap items-center gap-x-10 gap-y-2 font-mono text-sm md:text-base">
+                  {panel.board.map((b) => (
+                    <span key={b.fix} className="flex items-center gap-2.5 text-ink">
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full"
+                        style={{ background: b.color }}
+                      />
+                      {b.fix}
+                    </span>
+                  ))}
+                  <span className="text-muted">{panel.time}</span>
+                </div>
+                {last ? (
+                  <h3
+                    data-day-final
+                    className="track-display mt-6 origin-left font-display text-[clamp(4rem,13vw,12rem)] font-extrabold leading-[0.9]"
+                  >
+                    <span className="text-city">98</span>
+                    <span className="mx-[0.18em] align-[0.28em] text-[0.32em] font-semibold text-muted/70">
+                      to
+                    </span>
+                    <span className="text-liv">97</span>
+                  </h3>
+                ) : (
+                  <h3 className="track-display mt-6 max-w-[14ch] font-display text-[clamp(2.75rem,7.5vw,7rem)] font-extrabold leading-[0.95]">
+                    {panel.title}
+                  </h3>
+                )}
+                <p className="mt-6 max-w-[52ch] leading-relaxed text-muted">
+                  {panel.body}
+                </p>
               </div>
-              <h3 className="track-display mt-6 max-w-[14ch] font-display text-[clamp(2.75rem,7.5vw,7rem)] font-extrabold leading-[0.95]">
-                {panel.title}
-              </h3>
-              <p className="mt-6 max-w-[52ch] leading-relaxed text-muted">
-                {panel.body}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

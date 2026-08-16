@@ -47,7 +47,8 @@ export default function StatGrid() {
   );
 
   return (
-    <section ref={root} className="edge py-32 md:py-44">
+    <section ref={root} className="edge relative isolate py-32 md:py-44">
+      <div aria-hidden="true" className="wash wash-duel" />
       <h2 className="track-head max-w-3xl font-display text-3xl font-semibold md:text-5xl">
         A race with no room to breathe
       </h2>
