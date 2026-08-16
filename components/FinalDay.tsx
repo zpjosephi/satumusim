@@ -139,22 +139,6 @@ export default function FinalDay() {
                     </figcaption>
                   </figure>
                 )}
-                {last && (
-                  <figure className="absolute right-0 top-1/2 hidden w-60 -translate-y-1/2 lg:block">
-                    <div className="moment moment-city aspect-[4/5]">
-                      <Image
-                        src="/img/aguero.png"
-                        alt="Sergio Aguero in a Manchester City shirt"
-                        fill
-                        sizes="240px"
-                        className="object-cover object-top"
-                      />
-                    </div>
-                    <figcaption className="track-label mt-3 font-mono text-[10px] text-muted">
-                      SERGIO AGUERO &middot; THE ANSWER
-                    </figcaption>
-                  </figure>
-                )}
               </div>
             );
           })}

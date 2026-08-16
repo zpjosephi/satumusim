@@ -22,7 +22,6 @@ export default function Clearance() {
         // keluar layar, itu clearance-nya.
         gsap.set("[data-mm-label]", { autoAlpha: 0 });
         gsap.set("[data-mm-save]", { autoAlpha: 0 });
-        gsap.set("[data-mm-card]", { autoAlpha: 0, y: 20 });
         gsap.set("[data-mm-copy]", { autoAlpha: 0, y: 20 });
 
         const tl = gsap.timeline({
@@ -67,7 +66,6 @@ export default function Clearance() {
           )
           .to("[data-mm-streak]", { autoAlpha: 0, duration: 0.3 }, 4.25)
           .to("[data-mm-save]", { autoAlpha: 1, duration: 0.5 }, 4.3)
-          .to("[data-mm-card]", { autoAlpha: 1, y: 0, duration: 0.6 }, 4.4)
           .to("[data-mm-copy]", { autoAlpha: 1, y: 0, duration: 0.6 }, 4.5);
       });
     },
@@ -161,29 +159,13 @@ export default function Clearance() {
           </p>
         </div>
 
-        <div className="mt-14 flex items-end justify-between gap-10">
-          <figure data-mm-card className="hidden w-52 shrink-0 md:block">
-            <div className="moment moment-city aspect-[4/5]">
-              <Image
-                src="/img/stones.jpg"
-                alt="John Stones in a Manchester City shirt"
-                fill
-                sizes="208px"
-                className="origin-[32%_35%] scale-[1.65] object-cover object-[32%_22%]"
-              />
-            </div>
-            <figcaption className="track-label mt-3 font-mono text-[10px] text-muted">
-              JOHN STONES &middot; THE MAN ON THE LINE
-            </figcaption>
-          </figure>
-          <div data-mm-copy className="md:max-w-[52ch]">
-            <p className="leading-relaxed text-muted">
-              Nineteen minutes in, still 0-0, Sadio Mane&apos;s shot rolls toward
-              an open goal. John Stones scrapes it off the line with 11.7
-              millimetres to spare. City go on to win 2-1. That clearance is the
-              difference between trailing by four points and trailing by ten.
-            </p>
-          </div>
+        <div data-mm-copy className="mt-14 md:ml-auto md:max-w-[52ch]">
+          <p className="leading-relaxed text-muted">
+            Nineteen minutes in, still 0-0, Sadio Mane&apos;s shot rolls toward
+            an open goal. John Stones scrapes it off the line with 11.7
+            millimetres to spare. City go on to win 2-1. That clearance is the
+            difference between trailing by four points and trailing by ten.
+          </p>
         </div>
       </div>
     </section>
