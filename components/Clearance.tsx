@@ -117,12 +117,14 @@ export default function Clearance() {
           <div className="absolute right-[12%] top-[10%] h-px w-[30%] bg-ink/10" />
           <div className="absolute bottom-[10%] right-[12%] h-px w-[30%] bg-ink/10" />
 
-          {/* GSAP megang transform-nya, jadi offset vertikal ga boleh pake
+          {/* posisi berhenti: bola udah HAMPIR seluruhnya masuk, cuma sisa
+              belakangnya yang masih kena garis (gol = seluruh bola lewat).
+              GSAP megang transform-nya, jadi offset vertikal ga boleh pake
               translate class (bakal ketimpa) */}
           <div
             ref={ball}
-            className="absolute top-[calc(50%-2rem)] size-16 rounded-full bg-ink shadow-[0_0_30px_rgba(233,238,245,0.25)]"
-            style={{ left: "calc(88% - 4rem - 4px)" }}
+            className="absolute top-[calc(50%-2rem)] z-10 size-16 rounded-full bg-ink shadow-[0_0_30px_rgba(233,238,245,0.25)]"
+            style={{ left: "calc(88% - 8px)" }}
           >
             <div className="absolute left-[16%] top-[30%] h-[24%] w-[24%] rounded-full bg-bg/70" />
           </div>
@@ -135,7 +137,7 @@ export default function Clearance() {
                 data-mm-streak
                 className="absolute h-[3px] w-12 rounded-full bg-ink/60 opacity-0"
                 style={{
-                  left: "calc(88% - 4rem - 4px)",
+                  left: "calc(88% - 8px)",
                   top: `calc(50% - ${14 - i * 14}px)`,
                 }}
               />
