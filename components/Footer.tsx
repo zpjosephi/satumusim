@@ -10,7 +10,17 @@ export default function Footer() {
           Premier League titles. In 2018/19 it wasn&apos;t enough.
         </p>
         <div className="flex flex-col gap-1 font-mono text-xs text-muted md:text-right">
-          <p>satumusim &middot; a scroll-driven data story</p>
+          <p>
+            satumusim &middot; a scroll-driven data story by{" "}
+            <a
+              href="https://github.com/zpjosephi"
+              target="_blank"
+              rel="noreferrer"
+              className="text-ink underline decoration-[var(--line)] underline-offset-4 transition-colors hover:decoration-ink"
+            >
+              zpjosephi
+            </a>
+          </p>
           <p>Data: football-data.org, via the xeleven archive</p>
           <p>Built with Next.js and GSAP</p>
           <p className="mt-3 max-w-[52ch] text-muted/80 md:ml-auto">
