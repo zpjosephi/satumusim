@@ -125,6 +125,21 @@ body::after {
   background: rgba(240, 74, 94, 0.45);
 }
 
+/* jaring gawang buat rekonstruksi goal-line cam */
+.net-grid {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(233, 238, 245, 0.13) 0 1px,
+      transparent 1px 11px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(233, 238, 245, 0.13) 0 1px,
+      transparent 1px 11px
+    );
+}
+
 ::selection {
   background: rgba(62, 155, 224, 0.35);
 }
