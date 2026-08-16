@@ -96,6 +96,35 @@ body::after {
     radial-gradient(55% 50% at 92% 80%, rgba(240, 74, 94, 0.07), transparent 70%);
 }
 
+/* kartu momen: potret CC di-duotone warna klub biar nyatu sama palet
+   cerita (dan keliatan editorial, bukan tempelan foto match acak) */
+.moment {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.moment img {
+  filter: grayscale(1) contrast(1.05) brightness(0.9);
+}
+
+.moment::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
+.moment-city::after {
+  background: rgba(62, 155, 224, 0.5);
+}
+
+.moment-liv::after {
+  background: rgba(240, 74, 94, 0.45);
+}
+
 ::selection {
   background: rgba(62, 155, 224, 0.35);
 }

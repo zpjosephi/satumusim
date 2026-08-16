@@ -122,6 +122,39 @@ export default function FinalDay() {
                 <p className="mt-6 max-w-[52ch] leading-relaxed text-muted">
                   {panel.body}
                 </p>
+
+                {i === 1 && (
+                  <figure className="absolute right-0 top-1/2 hidden w-72 -translate-y-1/2 lg:block">
+                    <div className="moment moment-liv aspect-[4/3]">
+                      <Image
+                        src="/img/kop.jpg"
+                        alt="The Kop at Anfield covered in flags"
+                        fill
+                        sizes="288px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <figcaption className="track-label mt-3 font-mono text-[10px] text-muted">
+                      THE KOP &middot; CHAMPIONS FOR 83 SECONDS
+                    </figcaption>
+                  </figure>
+                )}
+                {last && (
+                  <figure className="absolute right-0 top-1/2 hidden w-60 -translate-y-1/2 lg:block">
+                    <div className="moment moment-city aspect-[4/5]">
+                      <Image
+                        src="/img/aguero.png"
+                        alt="Sergio Aguero in a Manchester City shirt"
+                        fill
+                        sizes="240px"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                    <figcaption className="track-label mt-3 font-mono text-[10px] text-muted">
+                      SERGIO AGUERO &middot; THE ANSWER
+                    </figcaption>
+                  </figure>
+                )}
               </div>
             );
           })}

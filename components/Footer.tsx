@@ -16,7 +16,9 @@ export default function Footer() {
           <p className="mt-3 max-w-[52ch] text-muted/80 md:ml-auto">
             Photos via Wikimedia Commons: Etihad at night by mjtmail/tiggy (CC
             BY 2.0), Etihad bowl by Ank Kumar (CC BY-SA 4.0), Anfield by
-            Ruaraidh Gillies (CC BY-SA 2.0)
+            Ruaraidh Gillies (CC BY-SA 2.0), John Stones by Brad Tutterow (CC
+            BY 2.0), Sergio Aguero by joshjdss (CC BY 2.0), the Kop by Colin
+            Pyle (CC BY-SA 2.0). Portraits are duotone-treated.
           </p>
         </div>
       </div>
