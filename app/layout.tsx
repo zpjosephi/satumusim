@@ -22,6 +22,19 @@ export const metadata: Metadata = {
   title: "satumusim | 98 to 97, the closest title race",
   description:
     "A scroll-driven data story about the 2018/19 Premier League season, when Manchester City and Liverpool were separated by a single point.",
+  openGraph: {
+    title: "satumusim | 98 to 97, the closest title race",
+    description:
+      "A scroll-driven data story about the 2018/19 Premier League season, when Manchester City and Liverpool were separated by a single point.",
+    type: "article",
+    siteName: "satumusim",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "satumusim | 98 to 97, the closest title race",
+    description:
+      "A scroll-driven data story about the 2018/19 Premier League season, when Manchester City and Liverpool were separated by a single point.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
