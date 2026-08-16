@@ -17,7 +17,8 @@ export default function Footer() {
             Photos via Wikimedia Commons: Etihad at night by mjtmail/tiggy (CC
             BY 2.0), Etihad bowl by Ank Kumar (CC BY-SA 4.0), Anfield by
             Ruaraidh Gillies (CC BY-SA 2.0), the Kop by Colin Pyle (CC BY-SA
-            2.0, duotone-treated).
+            2.0, duotone-treated). Match photography embedded via Getty
+            Images&apos; official embed player.
           </p>
         </div>
       </div>

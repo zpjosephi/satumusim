@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { FINAL_DAY } from "@/lib/season";
+import GettyEmbed from "./GettyEmbed";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -136,6 +137,21 @@ export default function FinalDay() {
                     </div>
                     <figcaption className="track-label mt-3 font-mono text-[10px] text-muted">
                       THE KOP &middot; CHAMPIONS FOR 83 SECONDS
+                    </figcaption>
+                  </figure>
+                )}
+                {last && (
+                  <figure className="absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block">
+                    <GettyEmbed
+                      embedId="dFwJkF7LQ193EY7u3JJTWA"
+                      sig="BXdS680I0hKPD049eNcQG2LqegKlOJqXvKmE6M3uzHM="
+                      item="1148631065"
+                      w={594}
+                      h={421}
+                      scale={0.6}
+                    />
+                    <figcaption className="track-label mt-3 font-mono text-[10px] text-muted">
+                      AGUERO&apos;S ANSWER &middot; VIA GETTY IMAGES
                     </figcaption>
                   </figure>
                 )}
