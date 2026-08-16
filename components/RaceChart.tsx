@@ -268,7 +268,7 @@ export default function RaceChart() {
               textAnchor="end"
               fontSize={cfg.tick}
               fill="var(--muted)"
-              fontFamily="var(--font-geist-mono)"
+              fontFamily="var(--font-plexmono)"
             >
               {t}
             </text>
@@ -282,7 +282,7 @@ export default function RaceChart() {
             textAnchor="middle"
             fontSize={cfg.tick}
             fill="var(--muted)"
-            fontFamily="var(--font-geist-mono)"
+            fontFamily="var(--font-plexmono)"
           >
             {t}
           </text>
