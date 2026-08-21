@@ -23,7 +23,8 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "satumusim | 98 to 97, the closest title race",
+  // tab title dipendekin, versi panjang cukup di og/twitter buat share card
+  title: "98 : 97",
   description:
     "A scroll-driven data story about the 2018/19 Premier League season, when Manchester City and Liverpool were separated by a single point.",
   openGraph: {
